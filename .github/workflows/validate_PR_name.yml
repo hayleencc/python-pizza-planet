@@ -1,0 +1,17 @@
+name: Validate PR title
+
+on:
+  pull_request:
+    types: [ opened, edited, reopened ]
+    
+
+jobs:
+  validate-PR-name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate PR title
+        if: github.event_name == 'pull_request'
+        uses: Slashgear/action-check-pr-title@v3.0.0
+        with:
+          regexp: '^(feat|fix|refactor|test): PIZ-[1-9]\d* [a-zA-Z0-9 ]+$'
