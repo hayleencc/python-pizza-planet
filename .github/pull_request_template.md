@@ -4,8 +4,7 @@ Write the reasons why you are making these changes, just to give more context. T
 
 #### 🛠 What I changed:
 
-List out what you changed (keep it simple) or writing the files changed using bullet points
-
+List out what you changed or writing the files changed using bullet points
 
 #### 🗃️ Trello Issues:
 
