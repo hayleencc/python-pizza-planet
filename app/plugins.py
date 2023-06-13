@@ -3,5 +3,3 @@ from flask_marshmallow import Marshmallow
 
 db = SQLAlchemy()
 ma = Marshmallow()
-
-just_test_variable = 1
