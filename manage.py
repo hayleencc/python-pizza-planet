@@ -23,11 +23,3 @@ def test():
 
 if __name__ == '__main__':
     manager()
-
-
-def test_lint_function() -> None:
-    unused_variable = 42
-    print("Hello, world!")
-
-
-test_lint_function()
