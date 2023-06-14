@@ -1,7 +1,7 @@
-from logging import debug
 import pytest
+from ..utils.functions import get_random_price, get_random_string
 
-from app.test.utils.functions import get_random_price, get_random_string
+# pylint: disable=no-member
 
 
 def test_create_size_service(create_size):
@@ -23,6 +23,14 @@ def test_update_size_service(client, create_size, size_uri):
         pytest.assume(updated_size[param] == value)
 
 
+def test_get_all_sizes_service(client, create_sizes, size_uri):
+    response = client.get(size_uri)
+    pytest.assume(response.status.startswith('200'))
+    returned_sizes = {size['_id']: size for size in response.json}
+    for size in create_sizes:
+        pytest.assume(size['_id'] in returned_sizes)
+
+
 def test_get_size_by_id_service(client, create_size, size_uri):
     current_size = create_size.json
     response = client.get(f'{size_uri}id/{current_size["_id"]}')
@@ -30,6 +38,3 @@ def test_get_size_by_id_service(client, create_size, size_uri):
     returned_size = response.json
     for param, value in current_size.items():
         pytest.assume(returned_size[param] == value)
-
-
-# def test_get_all_sizes_service(client, create_sizes, size_uri):
