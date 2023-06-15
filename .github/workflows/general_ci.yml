@@ -26,6 +26,6 @@ jobs:
             python -m pip install --upgrade pip
             make install
             
-      - name: Run tests
+      - name: Run tests with pytest and coverage
         run: |
             make test

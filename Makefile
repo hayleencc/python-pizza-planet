@@ -1,7 +1,12 @@
 export
 
+install: 
+	pip3 install -r requirements.txt
+
 test:
 	pytest
 
-install:
-	pip install -r requirements.txt
+run:
+	python3 manage.py run
+
+all: install run
