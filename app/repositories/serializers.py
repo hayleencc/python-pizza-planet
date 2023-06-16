@@ -55,7 +55,7 @@ class OrderDetailSerializer(ma.SQLAlchemyAutoSchema):
 class OrderSerializer(ma.SQLAlchemyAutoSchema):
     size = ma.Nested(SizeSerializer)
     detail = ma.Nested(OrderDetailSerializer, many=True)
-    beverages = ma.Nested(BeverageDetailSerializer, many=True)
+    beverage_detail = ma.Nested(BeverageDetailSerializer, many=True)
 
     class Meta:
         model = Order
@@ -70,5 +70,5 @@ class OrderSerializer(ma.SQLAlchemyAutoSchema):
             'total_price',
             'size',
             'detail',
-            'beverages'
+            'beverage_detail'
         )
