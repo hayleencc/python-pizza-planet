@@ -1,3 +1,7 @@
+import pytest
+from app.controllers.beverage import BeverageController
+
+
 def test_get_by_id(app, beverage: dict):
     created_beverage, _ = BeverageController.create(beverage)
     beverage_from_db, error = BeverageController.get_by_id(
