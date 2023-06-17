@@ -52,7 +52,15 @@ _For windows users:_
 - Install all necessary dependencies:
 
 ```bash
-pip3 install -r requirements.txt
+make install
+```
+
+- Execute the hooks (Only needed for the first run):
+
+```bash
+
+```bash
+make hooks
 ```
 
 - Start the database (Only needed for the first run):
@@ -83,6 +91,11 @@ set FLASK_ENV=development
 python3 manage.py run
 ```
 
+Or
+```bash
+make run
+```
+
 ## Running the frontend
 
 - Clone git UI submodule
@@ -111,4 +124,9 @@ ext install ritwickdey.LiveServer
 
 ```bash
 python3 manage.py test
+```
+
+Or
+```bash
+make test
 ```
