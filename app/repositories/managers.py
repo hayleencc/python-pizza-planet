@@ -38,6 +38,11 @@ class BaseManager:
         cls.session.commit()
         return cls.get_by_id(_id)
 
+    @classmethod
+    def drop(cls):
+        cls.session.query(cls.model).delete()
+        cls.session.commit()
+
 
 class SizeManager(BaseManager):
     model = Size
