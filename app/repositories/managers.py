@@ -84,6 +84,55 @@ class OrderManager(BaseManager):
         raise NotImplementedError(f'Method not suported for {cls.__name__}')
 
 
+class ReportManager(BaseManager):
+
+    @classmethod
+    def get_most_requested_ingredient(cls):
+        most_requested_ingredient_result = cls.session.query(Ingredient.name,
+                                                             db.func.sum(OrderDetail.ingredient_price).label(
+                                                                 'total price'),
+                                                             db.func.count(OrderDetail.ingredient_id).label(
+                                                                 'count')
+                                                             ).join(OrderDetail, OrderDetail.ingredient_id == Ingredient._id).group_by(Ingredient._id).order_by(db.func.count(OrderDetail.ingredient_id).desc()).all()
+
+        most_requested_ingredient = most_requested_ingredient_result[0][0]
+        most_requested_ingredient_price = most_requested_ingredient_result[0][1]
+        most_requested_ingredient_count = most_requested_ingredient_result[0][2]
+        return {
+            'name': most_requested_ingredient,
+            'total_price': most_requested_ingredient_price,
+            'count': most_requested_ingredient_count
+        }
+
+    @classmethod
+    def get_month_with_more_revenue(cls):
+        months = ['January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December']
+        month_with_more_revenue_result = cls.session.query(db.func.extract('month', Order.date).label('month'),
+                                                           db.func.sum(Order.total_price).label(
+            'total price')
+        ).group_by(db.func.extract('month', Order.date)).order_by(db.func.sum(Order.total_price).desc()).all()
+
+        month_with_more_revenue = int(month_with_more_revenue_result[0][0])
+        total_price_month_with_more_revenue = month_with_more_revenue_result[0][1]
+        return {
+            'month': months[month_with_more_revenue-1],
+            'total_price': total_price_month_with_more_revenue
+        }
+
+    @classmethod
+    def get_top_three_customers(cls):
+        top_three_customers = cls.session.query(Order.client_name,
+                                                db.func.sum(Order.total_price).label(
+                                                    'total_purchases')
+                                                ).group_by(Order.client_dni).order_by(db.func.sum(Order.total_price).desc()).limit(3).all()
+
+        return [{
+            'client_name': customer.client_name,
+            'total_purchases': customer.total_purchases
+        } for customer in top_three_customers]
+
+
 class IndexManager(BaseManager):
 
     @classmethod
