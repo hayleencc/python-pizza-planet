@@ -11,6 +11,7 @@ def test_create_beverage_service(create_beverage):
 
 
 def test_update_beverage_service(client, create_beverage, beverage_uri):
+    beverage_uri += f'id/{create_beverage.json["_id"]}'
     current_beverage = create_beverage.json
     update_data = {**current_beverage,
                    'name': get_random_string(), 'price': get_random_price(1, 5)}
