@@ -10,8 +10,8 @@ class BaseService:
         entity, error = self.controller.create(request.json)
         return self.get_response(entity, error)
 
-    def update(self):
-        entity, error = self.controller.update(request.json)
+    def update(self, _id: int):
+        entity, error = self.controller.update(_id, request.json)
         return self.get_response(entity, error)
 
     def get_by_id(self, _id: int):

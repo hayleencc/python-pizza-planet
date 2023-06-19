@@ -9,7 +9,7 @@ class BaseBlueprint(Blueprint):
         self.service = BaseService(controller_class)
 
         self.add_url_rule('/', methods=POST, view_func=self.create)
-        self.add_url_rule('/', methods=PUT, view_func=self.update)
+        self.add_url_rule('/<int:_id>', methods=PUT, view_func=self.update)
         self.add_url_rule('/id/<int:_id>', methods=GET,
                           view_func=self.get_by_id)
         self.add_url_rule('/', methods=GET, view_func=self.get_all)
@@ -17,8 +17,8 @@ class BaseBlueprint(Blueprint):
     def create(self):
         return self.service.create()
 
-    def update(self):
-        return self.service.update()
+    def update(self, _id: int):
+        return self.service.update(_id)
 
     def get_by_id(self, _id: int):
         return self.service.get_by_id(_id)
