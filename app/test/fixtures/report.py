@@ -1,5 +1,6 @@
 import pytest
 
+from seed.seed import Seeder
 
 @pytest.fixture
 def report_uri():
