@@ -13,7 +13,7 @@ def test_create_beverage_service(create_beverage):
 def test_update_beverage_service(client, create_beverage, beverage_uri):
     current_beverage = create_beverage.json
     update_data = {**current_beverage,
-                   'name': get_random_string(), 'price': get_random_price(1, 5)}
+                   'name': get_random_string(), 'price': get_random_price()}
     response = client.put(beverage_uri, json=update_data)
     pytest.assume(response.status.startswith('200'))
     updated_beverage = response.json

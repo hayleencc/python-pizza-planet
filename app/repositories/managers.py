@@ -88,6 +88,13 @@ class OrderManager(BaseManager):
     def update(cls):
         raise NotImplementedError(f'Method not suported for {cls.__name__}')
 
+    @classmethod
+    def drop(cls):
+        cls.session.query(OrderDetail).delete()
+        cls.session.query(BeverageDetail).delete()
+        cls.session.commit()
+        super().drop()
+
 
 class ReportManager(BaseManager):
 
@@ -101,7 +108,8 @@ class ReportManager(BaseManager):
                                                              ).join(OrderDetail, OrderDetail.ingredient_id == Ingredient._id).group_by(Ingredient._id).order_by(db.func.count(OrderDetail.ingredient_id).desc()).all()
 
         most_requested_ingredient = most_requested_ingredient_result[0][0]
-        most_requested_ingredient_price = most_requested_ingredient_result[0][1]
+        most_requested_ingredient_price = round(
+            most_requested_ingredient_result[0][1], 2)
         most_requested_ingredient_count = most_requested_ingredient_result[0][2]
         return {
             'name': most_requested_ingredient,
@@ -119,7 +127,8 @@ class ReportManager(BaseManager):
         ).group_by(db.func.extract('month', Order.date)).order_by(db.func.sum(Order.total_price).desc()).all()
 
         month_with_more_revenue = int(month_with_more_revenue_result[0][0])
-        total_price_month_with_more_revenue = month_with_more_revenue_result[0][1]
+        total_price_month_with_more_revenue = round(
+            month_with_more_revenue_result[0][1], 2)
         return {
             'month': months[month_with_more_revenue-1],
             'total_price': total_price_month_with_more_revenue
@@ -134,7 +143,7 @@ class ReportManager(BaseManager):
 
         return [{
             'client_name': customer.client_name,
-            'total_purchases': customer.total_purchases
+            'total_purchases': round(customer.total_purchases, 2)
         } for customer in top_three_customers]
 
 

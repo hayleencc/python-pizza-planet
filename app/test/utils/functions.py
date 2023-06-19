@@ -13,7 +13,9 @@ def get_random_choice(choices: Union[tuple, list]) -> Any:
     return random.choice(choices)
 
 
-def get_random_price(lower_bound: float, upper_bound: float) -> float:
+def get_random_price() -> float:
+    lower_bound = 1.0
+    upper_bound = 10.0
     return round(random.uniform(lower_bound, upper_bound), 2)
 
 
