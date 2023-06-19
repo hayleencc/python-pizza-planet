@@ -13,7 +13,7 @@ def test_create_size_service(create_size):
 
 
 def test_update_size_service(client, create_size, size_uri):
-    size_uri += f'id/{create_size.json["_id"]}'
+    size_uri += f'{create_size.json["_id"]}'
     current_size = create_size.json
     update_data = {**current_size, 'name': get_random_string(),
                    'price': get_random_price(1, 5)}

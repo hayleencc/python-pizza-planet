@@ -44,10 +44,8 @@ def test_update(app, beverage: dict):
         'name': get_random_string(),
         'price': get_random_price(1, 5)
     }
-    updated_beverage, error = BeverageController.update({
-        '_id': created_beverage['_id'],
-        **updated_fields
-    })
+    updated_beverage, error = BeverageController.update(
+        created_beverage['_id'], updated_fields)
     pytest.assume(error is None)
     beverage_from_database, error = BeverageController.get_by_id(
         created_beverage['_id'])
