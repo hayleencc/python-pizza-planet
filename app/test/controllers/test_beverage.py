@@ -42,7 +42,7 @@ def test_update(app, beverage: dict):
     created_beverage, _ = BeverageController.create(beverage)
     updated_fields = {
         'name': get_random_string(),
-        'price': get_random_price(1, 5)
+        'price': get_random_price()
     }
     updated_beverage, error = BeverageController.update(
         created_beverage['_id'], updated_fields)

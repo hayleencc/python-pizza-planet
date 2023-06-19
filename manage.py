@@ -8,6 +8,7 @@ from app import flask_app
 from app.plugins import db
 # flake8: noqa
 from app.repositories.models import Ingredient, Order, OrderDetail, Size
+from seed.seed import Seeder
 
 
 manager = FlaskGroup(flask_app)
@@ -19,6 +20,16 @@ migrate.init_app(flask_app, db)
 @manager.command('test', with_appcontext=False)
 def test():
     return pytest.main(['-v', './app/test'])
+
+
+@manager.command('seed', with_appcontext=True)
+def seed():
+    return Seeder.seed()
+
+
+@manager.command('drop', with_appcontext=True)
+def drop():
+    return Seeder.drop_tables()
 
 
 if __name__ == '__main__':
